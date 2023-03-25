@@ -1,46 +1,49 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { ROUTES } from '../../utils/routes'
+import { changeCategory, changeSort, cleanBooks, getBooks, setSearchText } from '../../store/booksReducer';
 
-import style from './Header.module.css'
-import SearchBooks from '../SearchBooks/SearchBooks'
-import { changeCategory, changeSort, cleanBooks, getBooks, searchText } from '../store/booksReducer'
+import { ROUTES } from '../../constants/routes';
+import SearchBooks from '../SearchBooks/SearchBooks';
 
+import style from './Header.module.css';
 
 const Header = () => {
     const [book, setBook] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { searchTexts, sorted, category } = useSelector((state) => state.books)
+    const { searchText, sorted, category } = useSelector((state) => state.books)
+
     const handleAction = (e) => {
         e.preventDefault()
         if (book.trim().length) {
-            dispatch(cleanBooks([]))
+            dispatch(cleanBooks())
             dispatch(getBooks([book, category, sorted, 0]))
-            dispatch(searchText(book))
+            dispatch(setSearchText(book))
             setBook('');
             navigate(ROUTES.BOOKS)
         }
     }
+
     const handleSort = (e) => {
         dispatch(changeSort(e.target.value))
-        if (searchTexts) {
+        if (searchText) {
             dispatch(cleanBooks([]))
-            
-            dispatch(getBooks([searchTexts, category, e.target.value, 0]))
+            dispatch(getBooks([searchText, category, e.target.value, 0]))
         }
     }
+
     const categorySort = (e) => {
         dispatch(changeCategory(e.target.value))
-        if (searchTexts) {
+        if (searchText) {
             dispatch(cleanBooks([]))
-            dispatch(getBooks([searchTexts, e.target.value, sorted, 0]))
+            dispatch(getBooks([searchText, e.target.value, sorted, 0]))
         }
     }
+
     return (
-        <header>
+        <header className={style.header}>
             <Link to={ROUTES.HOME}>
                 <h1>Search for books</h1>
             </Link>
@@ -54,4 +57,5 @@ const Header = () => {
         </header>
     )
 }
+
 export default Header

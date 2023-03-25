@@ -20,7 +20,7 @@ const booksReducer = createSlice({
     name: 'book',
     initialState: {
         books: [],
-        searchTexts: '',
+        searchText: '',
         sorted: 'relevance',
         category: '',
         startIndex: 0,
@@ -29,8 +29,8 @@ const booksReducer = createSlice({
         total: "",
     },
     reducers: {
-        searchText(state, { payload }) {
-            state.searchTexts = payload
+        setSearchText(state, { payload }) {
+            state.searchText = payload
         },
         changeSort(state, action) {
             state.sorted = action.payload
@@ -38,32 +38,33 @@ const booksReducer = createSlice({
         changeCategory(state, { payload }) {
             state.category = payload
         },
-        cleanBooks(state, { payload }) {
-
-            state.books = payload
+        cleanBooks(state) {
+            state.books = []
             state.startIndex = 0
         },
     },
     extraReducers: (builder) => {
-
-        builder.addCase(getBooks.pending, (state) => {  
+        builder.addCase(getBooks.pending, (state) => {
             state.status = 'loading'
         })
-        builder.addCase(getBooks.fulfilled, (state, action) => {  
+
+        builder.addCase(getBooks.fulfilled, (state, action) => {
             state.status = 'resolved'
             if (action.payload.items) {
-                action.payload.items.map(item => state.books.push(item))
+                action.payload.items.forEach(item => state.books.push(item))
                 state.startIndex += 1
             }
             if (action.payload.totalItems > 0 && state.startIndex == 1) {
                 state.total = action.payload.totalItems
             }
         })
-        builder.addCase(getBooks.rejected, (state, action) => {  
+
+        builder.addCase(getBooks.rejected, (state, action) => {
             state.status = 'rejected'
             state.error = action.payload
         })
     }
 })
-export const { searchText, changeSort, changeCategory, cleanBooks } = booksReducer.actions
+
+export const { setSearchText, changeSort, changeCategory, cleanBooks } = booksReducer.actions
 export default booksReducer.reducer

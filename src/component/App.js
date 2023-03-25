@@ -1,13 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 
-import Home from '../Home/Home';
-import Header from '../Header/Header';
-import Books from '../Books/Books';
-import DetailsBook from '../DetailsBook/DetailsBook';
+import Home from './Home/Home';
+import Header from './Header/Header';
+import Books from './Books/Books';
+import DetailsBook from './DetailsBook/DetailsBook';
 
-import { ROUTES } from '../../utils/routes';
-
-import './App.css';
+import { ROUTES } from '../constants/routes';
 
 function App() {
   return (
@@ -21,4 +19,5 @@ function App() {
     </>
   );
 }
+
 export default App;

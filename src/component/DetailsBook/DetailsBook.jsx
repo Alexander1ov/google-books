@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ROUTES } from '../../utils/routes';
-import style from './DetailsBook.module.css'
+
+import { ROUTES } from '../../constants/routes';
+import MyButton from '../interface/button/MyButton';
+
+import style from './DetailsBook.module.css';
+
 const DetailsBook = () => {
     const { id } = useParams()
     const { books } = useSelector((state) => state.books)
-    const data = books[id]?.volumeInfo;
-    const navigate = useNavigate();
+    const data = books[id]?.volumeInfo
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (books?.length === 0) {
@@ -16,13 +20,14 @@ const DetailsBook = () => {
     }, [books]);
 
     const handleBack = () => {
-        navigate(ROUTES.BOOKS);
-    };
+        navigate(`../${ROUTES.BOOKS}`)
+    }
+
     return (
         <section className={style.section}>
             <div className={style.container}>
                 <div>
-                    <img className={style.img} src={data?.imageLinks?.thumbnail} alt="" />
+                    <img className={style.img} src={data?.imageLinks?.thumbnail} />
                 </div>
                 <div className={style.info}>
                     <p>{data?.categories}</p>
@@ -35,9 +40,10 @@ const DetailsBook = () => {
                 </div>
             </div>
             <div className={style.button}>
-                <button onClick={handleBack}>Back</button>
+                <MyButton onClick={handleBack}>Back</MyButton>
             </div>
         </section>
     )
 }
+
 export default DetailsBook

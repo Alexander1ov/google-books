@@ -1,54 +1,44 @@
-import React from 'react'
+import React from 'react';
 
-import style from './SearchBooks.module.css'
+import MyInput from '../interface/input/MyInputHeader';
+import MySelect from '../interface/select/MySelect';
+
+import style from './SearchBooks.module.css';
 
 const SearchBooks = ({ value, updateValue, handleAction, handleSort, categorySort }) => {
     const search = (e) => updateValue(e.target.value)
+
     return (
         <div className={style.search}>
             <form className={style.form} action="">
-                <div className={style['search-input']}>
-                    <div className={style.icon}>
-                        <svg>
-                            <use xlinkHref={`${process.env.PUBLIC_URL}/sprite.svg#search`} />
-                        </svg>
-                    </div>
-                    <div className={style.input}>
-                        <input
-                            type="search"
-                            name="search"
-                            placeholder='Search for anything...'
-                            autoComplete='off'
-                            value={value}
-                            onChange={search}
-                        />
-                    </div>
-                    <button type='submit' onClick={handleAction}>Search</button>
-                </div>
+                <MyInput value={value} onChange={search} handleAction={handleAction} />
                 <div className={style.sorting}>
-
-                    <select defaultValue="Categories"
+                    <MySelect
+                        defaultValue="Categories"
                         onChange={categorySort}
-                    >
-                        <option disabled value="Categories">Categories</option>
-                        <option value="">All</option>
-                        <option value="art">Art</option>
-                        <option value="biography">Biography</option>
-                        <option value="computers">Computers</option>
-                        <option value="history">History</option>
-                        <option value="medical">Medical</option>
-                        <option value="poetry">Poetry</option>
-                    </select>
-                    <select defaultValue="Sort"
+                        options={[
+                            { value: '', name: 'All' },
+                            { value: 'art', name: 'Art' },
+                            { value: 'biography', name: 'Biography' },
+                            { value: 'computers', name: 'Computers' },
+                            { value: 'history', name: 'History' },
+                            { value: 'medical', name: 'Medical' },
+                            { value: 'poetry', name: 'Poetry' }
+                        ]}
+                    />
+                    <MySelect
+                        defaultValue="Sort"
                         onChange={handleSort}
-                    >
-                        <option disabled value="Sort">Sort</option>
-                        <option value="relevance">Relevance</option>
-                        <option value="newest">Newest</option>
-                    </select>
+                        options={[
+                            { value: 'relevance', name: 'Relevance' },
+                            { value: 'newest', name: 'Newest' }
+
+                        ]}
+                    />
                 </div>
             </form>
         </div>
     )
 }
+
 export default SearchBooks

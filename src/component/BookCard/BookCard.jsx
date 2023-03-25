@@ -1,8 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
 import style from '../Books/Book.module.css'
 
 const BookCard = ({ id, image, title, author, published, category }) => {
+
     return (
         <Link to={`/books/${id}`}>
             <div className={style['card-container']}>

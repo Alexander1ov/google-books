@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { getBooks } from '../../store/booksReducer';
 import BookCard from '../BookCard/BookCard';
 
-import style from './Book.module.css'
-import { getBooks } from '../store/booksReducer';
+import style from './Book.module.css';
 
 const Books = () => {
   const dispatch = useDispatch()
@@ -18,9 +19,10 @@ const Books = () => {
       {error && <h2 className={style.h2}>error occurred: {error}</h2>}
       {!books.length && status === 'resolved' && < h2 className={style.h2}> Books not found</h2>}
       {total && books.length > 0 && <h2 className={style.h2}>Found {total} {total > 1 ? "matches" : "match"} </h2>}
-     
+
       <div className={style.list}>
         {books && books.map((book, i) => {
+
           return (
             <BookCard
               key={i}
@@ -35,12 +37,18 @@ const Books = () => {
         })
         }
       </div>
-      {books.length > 0 && books.length < total && < div className={style.load}>
-        <button className={style.button} onClick={addBooks}>Load more...</button>
-      </div>
+
+      {books.length > 0 && books.length < total &&
+        < div className={style.load}>
+          <button className={style.button} onClick={addBooks}>
+            Load more...
+          </button>
+        </div>
       }
+
     </section >
   )
 }
+
 export default Books
 
