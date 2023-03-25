@@ -1,0 +1,49 @@
+.section {
+    margin: 20px auto 50px;
+    padding: 50px 0;
+    max-width: 1400px;
+    width: 100%;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    text-align: justify;
+}
+.img {
+    margin-top: 100px;
+    width: 250px;
+}
+.h2,
+.h3 {
+    width: 450px;
+    margin-top: 20px;
+}
+
+.description {
+    margin: auto;
+    margin-bottom: 20px;
+    width: 500px;
+}
+
+.button {
+    margin-top: 20px;
+    text-align: center;
+}
+
+@media (max-width: 500px) {
+    .img {
+        margin-top: 1px;
+    }
+    .h2,
+    .h3 {
+        width: 180px;
+        font-size: 20px;
+        font-weight: 300;
+    }
+    .description {
+        width: 200px;
+
+    }
+
+}
